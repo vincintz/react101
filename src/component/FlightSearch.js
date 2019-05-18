@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, TextField, Tabs, Tab } from '@material-ui/core';
+import { Button, Grid, TextField, Tabs, Tab } from '@material-ui/core';
 
 const SearchType = Object.freeze({
     ONE_WAY: 0,
@@ -18,34 +18,44 @@ export default () => {
     const handleTextChange = setState => event => {
         setState(event.target.value);
     }
+    const handleSubmit = event => {
+        event.preventDefault();
+        console.log(event);
+    }
     return (
-        <Grid>
-            <Tabs value={searchType} onChange={(handleChange)}>
-                <Tab label="Oneway" />
-                <Tab label="Return" />
-            </Tabs>
-            <TextField
-                label="Origin"
-                fullWidth
-                margin="normal"
-                value={origin}
-                onChange={handleTextChange(setOrigin)}
-                variant="outlined"
-                style={{ margin: 8 }}
-                InputLabelProps={{ shrink: true }}
-            />
-            <TextField
-                label="Destination"
-                fullWidth
-                margin="normal"
-                value={destination}
-                onChange={handleTextChange(setDestination)}
-                variant="outlined"
-                style={{ margin: 8 }}
-                InputLabelProps={{ shrink: true }}
-            />
+        <form onSubmit={handleSubmit}>
             <Grid container>
-                <Grid item xs={6}>
+                <Tabs value={searchType} onChange={(handleChange)}>
+                    <Tab label="Oneway" />
+                    <Tab label="Return" />
+                </Tabs>
+            </Grid>
+            <Grid container>
+                <TextField
+                    label="Origin"
+                    fullWidth
+                    margin="normal"
+                    value={origin}
+                    onChange={handleTextChange(setOrigin)}
+                    variant="outlined"
+                    style={{ margin: 8 }}
+                    InputLabelProps={{ shrink: true }}
+                />
+            </Grid>
+            <Grid container>
+                <TextField
+                    label="Destination"
+                    fullWidth
+                    margin="normal"
+                    value={destination}
+                    onChange={handleTextChange(setDestination)}
+                    variant="outlined"
+                    style={{ margin: 8 }}
+                    InputLabelProps={{ shrink: true }}
+                />
+            </Grid>
+            <Grid container>
+                <Grid item xs={5}>
                     <TextField
                         label="Departure"
                         fullWidth
@@ -60,7 +70,7 @@ export default () => {
                 </Grid>
                 {searchType === SearchType.RETURN
                     &&
-                    <Grid item xs={6}>
+                    <Grid item xs={5}>
                         <TextField
                             label="Arrival"
                             fullWidth
@@ -74,6 +84,13 @@ export default () => {
                         />
                     </Grid>}
             </Grid>
-        </Grid>
+            <Grid container>
+                <Grid item>
+                    <Button type="submit" variant="contained" color="primary">
+                        Search
+                    </Button>
+                </Grid>
+            </Grid>
+        </form>
     )
 }
